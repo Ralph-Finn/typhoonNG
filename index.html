@@ -21,8 +21,9 @@ $(document).ready( function() {
     $('.subMenu').smint({
     	'scrollSpeed' : 1000
     });
-	var windowHeight =document.body.clientHeight*0.36; //我也不知道为什么是这个值，也许这就是命吧
+	var windowHeight =window.screen.height ; //我也不知道为什么是这个值，也许这就是命吧
 	$("#section1,#section2").css("height",windowHeight);
+	$("#sectiontop").css("height",windowHeight);
 });
 
 
@@ -34,7 +35,14 @@ $(document).ready( function() {
 </head>
 <body style="overflow-y:hidden;overflow-x:hidden">
 <div class="wrap ">
-	<div class="section sTop">
+
+	<div class="subMenu" >
+
+	 		<a href="#s3"  class="subNavBtn">主页</a>
+	 		<a href="#s1"  id="button1" class="subNavBtn">台风预测</a> 
+			<a href="#s2"  id="button2" class="subNavBtn">区域划分</a>
+	</div>
+	<div id="sectiontop" class="section s3">
 		<div id="titlePic">
 			<img src="./resouce/title.jpg"  height="200" width="250"/>
 		</div>
@@ -42,13 +50,6 @@ $(document).ready( function() {
 			<h1 class="title">中国南方电网</h1>
 			<h2 class="subtitle">台风灾害评估系统</h2>
 		</div>
-	</div>
-
-	<div class="subMenu" >
-
-	 		<a href="#sTop" class="subNavBtn">主页</a>
-	 		<a href="#s1"  id="button1" class="subNavBtn">台风预测</a> 
-			<a href="#s2"  id="button2" class="subNavBtn">区域划分</a>
 	</div>
 
 	<div id="section1" class="section s1">
