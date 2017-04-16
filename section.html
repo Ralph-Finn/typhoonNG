@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>故障分析</title>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Ss2NVqvLYAcM3EcdVcTT6QLtAkDvXCvX "></script>
+<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<link href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="./resouce/loading/css/fakeLoader.css">
+<style type="text/css">  
+	.anchorBL{  
+	   display:none;  
+	}  
+</style> 
+<style type="text/css">
+	body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+	#allmap {height:100%; width:calc( 100%-330px);z-index:-1;top:0;}
+	#control{width:100%;}
+	#time .ui-slider-range { background: #81C0C0; }
+	#time .ui-slider-handle { border-color: #81C0C0; }
+	#time{
+		width:320px;
+	}
+	#list{z-index:99;float:left;float:bottom}
+	#tool{float:right;width:320px}
+	#swatch{margin:0 auto}
+	#sned1{margin-left:100px;}
+	#send2{margin-left:100px;}
+	#list{position:absolute; left:0px; top:0px;background-color:rgba(100%,100%,100%,0.8);}
+	#timepicker{margin-left:10px}
+</style>
+</head>
+<body>
+<div id = "tool" >
+<div id="timepicker">
+<h4 style="display:inline-block;color:#ffffff">当前观测时间：</h4>
+<h4 style = "text-align:center;font-family:verdana;display:inline-block;color:#ffffff" id="swatch"></h4> 
+</div>
+<!--文件上传-->
+<input  id ="send1" type="submit" style = "margin-left:100px"value="&nbsp&nbsp电气分区&nbsp&nbsp">
+<!--开始计算-->
+<input id="send2" type="submit" value="断面识别_1" />
+<!--时间选择-->
+
+<!--损坏数据-->
+<div id = "tableBox"style="width:320px">
+<table id="myTable" style="font-size:6px;width:320px"></table>
+</div>
+</div>
+<table id = "list" style="background-color:000000;opacity=50">
+	<tr>
+	<td><img src="./resouce/1.png"/></td>
+	<td>第一类节点</td>
+	</tr>	
+	<tr>
+	<td><img src="./resouce/2.png"/></td>
+	<td>第二类节点</td>
+	</tr>
+	<tr>
+	<td><img src="./resouce/3.png"/></td>
+	<td>第三类节点</td>
+	</tr>
+	<td><img src="./resouce/feng.png"/></td>
+	<td>第四类节点</td>
+	</tr>
+</table>
+
+<div id="allmap"></div>
+</body> 
+<script src="./section.js"></script>
+</html>

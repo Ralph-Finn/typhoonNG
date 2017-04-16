@@ -1,0 +1,45 @@
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS    BJZ500   525SX                  3100 3000          1050                   )            *** WARNING 
+ *** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS    PSS2    18.05012.008.000         300299.0145.0     1010                   )            *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS yn KM21G   20.0KM20.0010.00         300200.0185.9 -100 980                   )            *** WARNING 
+ *** WARNING   该卡中变压器分接头偏离正常值过大。                                                                        *** WARNING 
+ *** WARNING   T     QYXN1   15.7 QINGYXN=500.  340  .00073.04194            18.0 525.0                                  *** WARNING 
+ *** WARNING   该支路的电阻大于等于电抗。R =  0.00195X =  0.00169                                                        *** WARNING 
+ *** WARNING   L     KAIYUANB220. ZHUGANGB220.2 1200 .00195.00169      .0015  1.6                                        *** WARNING 
+ *** WARNING   该支路的电阻大于等于电抗。R =  0.00188X =  0.00144                                                        *** WARNING 
+ *** WARNING   L     KAIYUAN 220. ZHUGANG 220.1 1200 .00188.00144      .0012  1.6                                        *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS    BJZ500   525SX                  3100 3000          1050                   )            *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS yn KM21G   20.0KM20.0010.00         300200.0185.9 -100 980                   )            *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS    PSS2    18.05012.008.000         300299.0145.0     1010                   )            *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS    BJZ500   525SX                  3100 3000          1050                   )            *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS yn KM21G   20.0KM20.0010.00         300200.0185.9 -100 980                   )            *** WARNING 
+0*** WARNING    Missing voltage data, global values used : VMAX, VMIN( 1.052 0.950)                                      *** WARNING 
+ *** WARNING                                                                                                             *** WARNING 
+ *** WARNING               (BS    PSS2    18.05012.008.000         300299.0145.0     1010                   )            *** WARNING 
+ *** WARNING   无法识别的数据行：                                                                                        *** WARNING 
+ *** WARNING   节点"滇水63     6.3"的无功出力    7.0较大。                                                               *** WARNING 
+0*** WARNING    节点 BA-NEG   199.0 分区 N2 输出误差:  -0.157MW有功   -18.64Mvar无功                                     *** WARNING 
+0*** WARNING    节点 BA-POS   199.0 分区 N2 输出误差:  -0.157MW有功   -18.64Mvar无功                                     *** WARNING 
+0*** WARNING    节点 GNG_NEG  198.0 分区 N2 输出误差:  -0.024MW有功     5.44Mvar无功                                     *** WARNING 
+0*** WARNING    节点 GNG_POS  198.0 分区 N2 输出误差:  -0.024MW有功     5.44Mvar无功                                     *** WARNING 
+0*** WARNING    节点 ZQ-NEG   199.0 分区 N2 输出误差:  -0.088MW有功    13.93Mvar无功                                     *** WARNING 
+0*** WARNING    节点 ZQ-POS   199.0 分区 N2 输出误差:  -0.088MW有功    13.93Mvar无功                                     *** WARNING 
+0*** WARNING    节点 ANSH-NEG 210.0 分区 N4 输出误差:   0.114MW有功    16.72Mvar无功                                     *** WARNING 
+0*** WARNING    节点 ANSH-POS 210.0 分区 N4 输出误差:   0.114MW有功    16.72Mvar无功                                     *** WARNING 
+0*** WARNING    节点 XR-NEG   210.0 分区 N4 输出误差:   0.013MW有功    -5.83Mvar无功                                     *** WARNING 
+0*** WARNING    节点 XR-POS   210.0 分区 N4 输出误差:   0.013MW有功    -5.83Mvar无功                                     *** WARNING 
