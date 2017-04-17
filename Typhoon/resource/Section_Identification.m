@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%% Section Identification %%%%%%%%%%%%%%%%%%%%%%%%
-function Section_Identification()
+function N_cate = Section_Identification()
 tic;                            %开始计时
 
 %% ============== Initial Partition ==============
@@ -201,32 +201,32 @@ end
 
 % ------------------- 绘制输电断面 ------------------- 
 %figure 
-fnshp_P='china_basic_map\bou2_4p.shp';%ShapeType: 'Polygon'   
-infoP = shapeinfo(fnshp_P);    
-readP=shaperead(fnshp_P);
-mapshow(fnshp_P);
-hold on
-axis([109 119 18 27])
-color={'r','b','g','m','c','k','w','y'};
-for i=1:N_cate
-    for j=1:l_c(i)
-        st=find(EZ_n(:,1,i)==EZ_l(j,2,i));
-        en=find(EZ_n(:,1,i)==EZ_l(j,4,i));
-        %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'k','linewidth',2);
-    end
-    for j=1:Id_n(i,2)
-        st=find(EZ_n(:,1,i)==Ident(j,2,i));
-        en=find(EZ_n(:,1,i)==Ident(j,4,i));
-        %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'y','linewidth',2);
-        %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],color{i},'linewidth',4);
-    end
-    for j=1:n_c(i)
-        %plot(EZ_n(j,13,i),EZ_n(j,14,i),'ko','MarkerFaceColor','r','MarkerSize',8);
-    end
-    for j=1:Id_n(i,1)
-        %plot(TS_n(CP(j,i),13),TS_n(CP(j,i),14),'kh','MarkerFaceColor','g','MarkerSize',10);
-    end
-end
+% fnshp_P='china_basic_map\bou2_4p.shp';%ShapeType: 'Polygon'   
+% infoP = shapeinfo(fnshp_P);    
+% readP=shaperead(fnshp_P);
+% mapshow(fnshp_P);
+% hold on
+% axis([109 119 18 27])
+% color={'r','b','g','m','c','k','w','y'};
+% for i=1:N_cate
+%     for j=1:l_c(i)
+%         st=find(EZ_n(:,1,i)==EZ_l(j,2,i));
+%         en=find(EZ_n(:,1,i)==EZ_l(j,4,i));
+%         %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'k','linewidth',2);
+%     end
+%     for j=1:Id_n(i,2)
+%         st=find(EZ_n(:,1,i)==Ident(j,2,i));
+%         en=find(EZ_n(:,1,i)==Ident(j,4,i));
+%         %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'y','linewidth',2);
+%         %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],color{i},'linewidth',4);
+%     end
+%     for j=1:n_c(i)
+%         %plot(EZ_n(j,13,i),EZ_n(j,14,i),'ko','MarkerFaceColor','r','MarkerSize',8);
+%     end
+%     for j=1:Id_n(i,1)
+%         %plot(TS_n(CP(j,i),13),TS_n(CP(j,i),14),'kh','MarkerFaceColor','g','MarkerSize',10);
+%     end
+% end
 
 toc; 
 end%停止计时

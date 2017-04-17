@@ -21,7 +21,7 @@ $(document).ready( function() {
     $('.subMenu').smint({
     	'scrollSpeed' : 1000
     });
-	var windowHeight =window.screen.height ; //我也不知道为什么是这个值，也许这就是命吧
+	var windowHeight =$(window).height() ; //目前为止，使用jquery来获取窗口高度的方法是最好的
 	$("#section1,#section2").css("height",windowHeight);
 	$("#sectiontop").css("height",windowHeight);
 });
@@ -44,7 +44,7 @@ $(document).ready( function() {
 	</div>
 	<div id="sectiontop" class="section s3">
 		<div id="titlePic">
-			<img src="./resouce/title.jpg"  height="200" width="250"/>
+			<img src="./resouce/title.jpg"  height="200" width="250" class="img"/>
 		</div>
 		<div class="inner">
 			<h1 class="title">中国南方电网</h1>

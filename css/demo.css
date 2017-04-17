@@ -123,6 +123,9 @@ a {
 .end {
 	margin: 0;
 }
+.img {
+	margin-right:200px;
+}
 
 
 
@@ -152,7 +155,7 @@ a {
 }
 
 .s3 {
-	background: #1b83b3;
+	background: #04367d;
 }
 
 

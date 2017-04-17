@@ -16,7 +16,8 @@ while($con){
 }
 $hear=socket_read($socket,1024);
 socket_shutdown($socket);
-readCSV(readExcle());
+$hear = $hear - 0;
+readCSV($hear, readExcle());
 
 function readExcle(){
 $reader = PHPExcel_IOFactory::createReader('Excel5'); //设置以Excel5格式(Excel97-2003工作簿)
@@ -35,11 +36,11 @@ for ($row = 1; $row <= $highestRow; $row++){//行数是以第1行开始
 return $dataset;
 }
 
-function readCSV($data3){
+function readCSV($num,$data3){
 	$data = array();
 	$data1 = array();
 	$data2 = array();
-	for($key =1;$key<5;$key++){
+	for($key =1;$key<($num+1);$key++){
 		$name = './Typhoon/resource/sectionPoint'.strval($key).'.csv';
 		//$name = './Typhoon/resource/sectionPoint1.csv';
 		$file = fopen($name,'r');
@@ -49,7 +50,7 @@ function readCSV($data3){
 		}
 	$data1[] = $dataset;
 	}
-	for($key =1;$key<5;$key++){
+	for($key =1;$key<($num+1);$key++){
 		$name = './Typhoon/resource/sectionLine'.strval($key).'.csv';
 		//$name = './Typhoon/resource/sectionPoint1.csv';
 		$file = fopen($name,'r');

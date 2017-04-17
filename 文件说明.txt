@@ -6,3 +6,6 @@ fileup.html ÊÇÎÄ¼þÉÏ´«µÄ×ÓÒ³Ãæ£¬µ÷ÓÃµÄÊÇupload_file.phpÀ´ÊµÏÖÎÄ¼þ´æ´¢ÔÚ·þÎñÆ÷ÉÏµ
 ÎÄ¼þ¼ÐTyphoon£¬ÀïÃæÊÇmatlabµÄºËÐÄ¼ÆËã³ÌÐò£¬ÓÉÖ÷³ÌÐòcenterServer.mÀ´Çý¶¯£¬¹¤×÷Ê±£¬Õû¸ömatlab´¦ÓÚbusy×´Ì¬¡£Õâ¸öÎÄ¼þ¼ÐÖÐÒ²´æÔÚ×ÅÊý¾ÝÎÄ¼þ£¬µ«ÊÇÓÉÓÚÀúÊ·Ô­Òò×éÖ¯µÄ¿ÉÄÜ²»ÊÇÌ«ºÃ¡£
 ÎÄ¼þ¼ÐPHPExcel£¬°üº¬Excel±í¸ñ¶ÁÈ¡µÄ³ÌÐò£¬ÓÉÓÚÀúÊ·Ô­Òò£¬ºóÃæ¸ÄÓÃcsvÎÄ¼þÀ´×÷ÎªÊý¾ÝµÄ´æ´¢½éÖÊ£¬µ«ÊÇ²¿·Ö¹¦ÄÜÈÔÈ»ÐèÒªÓÐ¶ÁÈ¡Excel±í¸ñµÄÄÜÁ¦¡£
 ×¢ÒâÃ¿´ÎÐÞ¸ÄÎÄ¼þÄÚÈÝÖ®ºóÐèÒªÊ¹ÓÃgitÀ´Í¬²½¼ÇÂ¼½Å±¾¡£
+
+
+githubÉÏµÄµØÖ·Îª git@github.com:Ralph-Finn/typhoon.git
