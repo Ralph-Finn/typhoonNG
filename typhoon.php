@@ -23,7 +23,7 @@ while($con){
         $words='1';
         socket_write($socket,$words);
 		$a = $a + 1;
-        if($a==1000){break;}
+        if($a==1000){break;}//成功将数据发送量减少到原来的1/10
 }
 $hear=socket_read($socket,1024);
 socket_shutdown($socket);

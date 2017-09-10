@@ -9,7 +9,7 @@ $con=socket_connect($socket,'127.0.0.1',4002);
 if(!$con){socket_close($socket);exit;}	
 $a = 0;
 while($con){
-        $words='2';
+        $words=$_POST['type'];//将数据类类型发送到MATLAB程序中
         socket_write($socket,$words);
 		$a = $a + 1;
         if($a==1000){break;}
@@ -36,7 +36,7 @@ for ($row = 1; $row <= $highestRow; $row++){//行数是以第1行开始
 return $dataset;
 }
 
-function readCSV($num,$data3){
+function readCSV($num,$data4){
 	$data = array();
 	$data1 = array();
 	$data2 = array();
@@ -60,10 +60,32 @@ function readCSV($num,$data3){
 		}
 	$data2[] = $dataset;
 	}
-	$data[] = $data1;
-	$data[] = $data2;
-	$data[] = $data3;
-	$data[] = readTime();
+	$name = './Typhoon/resource/connect.csv';
+	//$name = './Typhoon/resource/sectionPoint1.csv';
+	$file = fopen($name,'r');
+	$dataset = array();		
+	while ($row = fgetcsv($file)) {
+		$dataset[] = $row;
+	}
+	$data3[] = $dataset;
+	//////////////////////////////////////////////////////
+	for($key =1;$key<($num+1);$key++){
+		$name = './Typhoon/resource/Ident'.strval($key).'.csv';
+		//$name = './Typhoon/resource/sectionPoint1.csv';
+		$file = fopen($name,'r');
+		$dataset = array();		
+		while ($row = fgetcsv($file)) {
+			$dataset[] = $row;
+		}
+	$data6[] = $dataset;
+	}
+	////////////////////////////////////////
+	$data[] = $data1;//分区点数据
+	$data[] = $data2;//分区线数据
+	$data[] = $data3;//分区连接数据
+	$data[] = $data4;//总点数据
+	$data[] = readTime();//当前的观测时间
+	$data[] = $data6;//断面识别的数据
 	echo json_encode($data);
 }
 

@@ -1,66 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-<meta charset="utf-8"> 
-<title>中国南方电网台风灾害评估系统</title>
-
-<meta name = "keywords" content = "SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
-<meta name = "description" content = "SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
-<meta name="viewport" content="width=device-width">
-
-
-<link href="css/demo.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="js/jquery.min.js"></script>
-
-<script	src="js/jquery.smint.js" type="text/javascript" ></script>
-
-<script type="text/javascript">
-	
-
-$(document).ready( function() {
-    $('.subMenu').smint({
-    	'scrollSpeed' : 1000
-    });
-	var windowHeight =$(window).height() ; //目前为止，使用jquery来获取窗口高度的方法是最好的
-	$("#section1,#section2").css("height",windowHeight);
-	$("#sectiontop").css("height",windowHeight);
-});
-
-
-</script>
-<style>
-#titlePic{position:absolute; right:0px; top:0px; }
-</style>
-
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>灾害系统</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+	<link rel="stylesheet" type="text/css" href="css/bootsnav.css">
+	<link rel="stylesheet" type="text/css" href="myStyle.css">
+	<link rel="stylesheet" type="text/css" href="./css/StyleNN.css">
+	<style type="text/css">
+		.navbar-brand{
+		    padding: 29px 15px;
+		    height: auto;
+		}
+		nav.navbar.bootsnav{
+		    border: none;
+		    margin-bottom: 150px;
+		}
+		.navbar-nav{
+		    float: left;
+		}
+		nav.navbar.bootsnav ul.nav > li > a{
+		    color: #474747;
+		    text-transform: uppercase;
+		    padding: 30px;
+		}
+		nav.navbar.bootsnav ul.nav > li:hover{
+		    background: #f4f4f4;
+		}
+		.nav > li:after{
+		    content: "";
+		    width: 0;
+		    height: 5px;
+		    background: #34c9dd;
+		    position: absolute;
+		    bottom: 0;
+		    left: 0;
+		    transition: all 0.5s ease 0s;
+		}
+		.nav > li:hover:after{
+		    width: 100%;
+		}
+		nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after{
+		    content: "+";
+		    font-family: 'FontAwesome';
+		    font-size: 16px;
+		    font-weight: 500;
+		    position: absolute;
+		    top: 35%;
+		    right: 10%;
+		    transition: all 0.4s ease 0s;
+		}
+		nav.navbar.bootsnav ul.nav > li.dropdown.on > a.dropdown-toggle:after{
+		    content: "\f105";
+		    transform: rotate(90deg);
+		}
+		.dropdown-menu.multi-dropdown{
+		    position: absolute;
+		    left: -100% !important;
+		}
+		nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
+		    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		    border: none;
+		}
+		@media only screen and (max-width:990px){
+		    nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after,
+		    nav.navbar.bootsnav ul.nav > li.dropdown.on > a.dropdown-toggle:after{ content: " "; }
+		    .dropdown-menu.multi-dropdown{ left: 0 !important; }
+		    nav.navbar.bootsnav ul.nav > li:hover{ background: transparent; }
+		    nav.navbar.bootsnav ul.nav > li > a{ margin: 0; }
+		}
+	</style>
 </head>
-<body style="overflow-y:hidden;overflow-x:hidden">
-<div class="wrap ">
-
-	<div class="subMenu" >
-
-	 		<a href="#s3"  class="subNavBtn">主页</a>
-	 		<a href="#s1"  id="button1" class="subNavBtn">台风预测</a> 
-			<a href="#s2"  id="button2" class="subNavBtn">区域划分</a>
-	</div>
-	<div id="sectiontop" class="section s3">
-		<div id="titlePic">
-			<img src="./resouce/title.jpg"  height="200" width="250" class="img"/>
+<body style="overflow-y:hidden;overflow-x:hidden;background-color:#000000">
+	<div><img id = "bg" src="./resource/bg.png" width = 1380px style="position:absolute;"/></div>
+	<h2 style="z-index:99;position:absolute;margin-left:380px;">台风灾害评估平台</h2>
+	<div><img id = "tt" src="./resource/title.png"  height = 85px style="z-index:9999;position:relative;margin-left:30px;"/></div>
+	<nav class="animenu"> 
+		  <button class="animenu__toggle">
+		    <span class="animenu__toggle__bar"></span>
+		    <span class="animenu__toggle__bar"></span>
+		    <span class="animenu__toggle__bar"></span>
+		  </button>
+		  <ul class="animenu__nav" style="opacity:0.7">
+		    <li>
+		      <a href="./typhoonNG.html" target="showframe">台风预测</a>
+		    </li>
+		    <li>
+		      <a href="./sectionNG.html" target="showframe">分区及断面</a>
+		    </li>                   
+		  </ul>
+		</nav>
+		<div id="section" style="width:100%;height:600px;margin-top:-10px">
+		<iframe src="./typhoonNG.html" name="showframe" frameborder="no" width=100% height=98% seamless></iframe>
 		</div>
-		<div class="inner">
-			<h1 class="title">中国南方电网</h1>
-			<h2 class="subtitle">台风灾害评估系统</h2>
-		</div>
-	</div>
-
-	<div id="section1" class="section s1">
-		<iframe src="./typhoon.html" width=100% height=100% seamless></iframe>
-	</div>
-
-	<div id="section2" class="section s2">
-		<iframe src="./section.html" width=100% height=100% seamless></iframe>
 	</div>
 	
-</div>
-
+	<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootsnav.js"></script>
+	<script>
+	$(document).ready( function() {
+		var windowHeight =$(window).height(); 
+		$("#section").css("height",windowHeight);
+		var windowWidth = $(window).width(); 
+		console.log(windowWidth);
+		document.getElementById('bg').width = windowWidth+15;
+		document.getElementById('tt').height = parseInt(windowWidth*85/1380);
+	});
+	</script>
 </body>
 </html>

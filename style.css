@@ -1,0 +1,8 @@
+body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+#allmap {height:100%; width:calc( 100%-330px);z-index:-1;top:0;}
+#control{width:100%;}
+#list{z-index:99;float:left;float:bottom}
+#tool{float:right;width:320px}
+.button{display:iline-block;position:relative;left:50px}
+#draw{display:iline-block;position:relative;left:50px}
+#list{position:absolute; left:0px; top:0px; background-color:rgba(100%,100%,100%,0.8);}

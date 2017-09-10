@@ -27,8 +27,9 @@ $(function(){
 		}
 		else{
 		 map.clearOverlays();//清除全部标记物体，为浏览器释放内存
-		 drawLine(data);
-		 drawPoint(data);
+		 drawLine(data,0);
+		 drawLine(data,1);
+		 drawPoint(data,0);
 		 refreshSwatch(data);
 		}
 		$( "#send1" ).button( "enable"); 
@@ -39,20 +40,60 @@ $(function(){
 	}
    });
   }); 
+    $("#send2").click(function(){
+	var params = {type:'3'};
+	$( "#send2" ).button( "disable");
+   $.ajax({
+	url:'./section.php',
+    type:'post',
+    dataType:'json',
+	data: params, 
+    success:function(data){
+		console.log(data);
+		if(typeof(data) == "number")
+		{
+			 alert("系统繁忙，请稍后重试！！！");
+		}
+		else{
+		 console.log(data);
+		 map.clearOverlays();//清除全部标记物体，为浏览器释放内存
+		 drawLine(data,2);
+		 drawLine(data,3);
+		 drawPoint(data,1);
+		 refreshSwatch(data);
+		}
+		$( "#send2" ).button( "enable"); 
+    },
+	error: function(){
+		alert('系统繁忙，请稍后重试！！！');
+		$( "#send2" ).button( "enable"); 
+	}
+   });
+  });
 
  });
  
- function drawPoint(data)
+ function drawPoint(data,method)
  {
-	var myIcon1 = new BMap.Icon("./resouce/1.png", new BMap.Size(10, 10), {});
-	var myIcon2 = new BMap.Icon("./resouce/2.png", new BMap.Size(10, 10), {});
-	var myIcon3= new BMap.Icon("./resouce/3.png", new BMap.Size(10, 10), {});
-	var myIcon4= new BMap.Icon("./resouce/feng.png", new BMap.Size(10, 10), {});
 	var pointLib = data[0];
-	var myIcon = [myIcon1,myIcon2,myIcon3,myIcon4];
-	for(var key in pointLib){
-		var pointClub = pointLib[key];
-		somePoint(pointClub,key,myIcon[key]);
+	var Icon = new Array();
+	for(i=1;i<8;i++)
+	{
+		//构造icon的列表，这里面的图片非常的完全。
+		var mac = new BMap.Icon("./resource/n"+ String(i)+".png", new BMap.Size(10, 10), {});
+		Icon.push(mac);
+	}
+	var grey = new BMap.Icon("./resource/g1.png", new BMap.Size(10, 10), {});
+	if(method == 0 ){
+		for(var key in pointLib){
+			var pointClub = pointLib[key];
+			somePoint(pointClub,key,Icon[key]);
+		}
+	}else{
+		for(var key in pointLib){
+			var pointClub = pointLib[key];
+			somePoint(pointClub,key,grey);
+		}
 	}
 	
 
@@ -69,23 +110,75 @@ $(function(){
  }
  
  
- function drawLine(data)
+ function drawLine(data,method)
  {
 	var point1=new BMap.Point(113.14,23.08);
 	var point2=new BMap.Point(113.14,23.08);
-	var pointClub = data[2];
+	var pointClub = data[3];//这是所有的点的坐标
+	var color = ['#FF0000','#00FF00','#0000FF','#FFFF00','#00FFFF','#FF00FF','#A52A2A'];//颜色表
 	var lineLib = data[1];
-	var color = ['red','yellow','blue','#921AFF']
-	for(var index in lineLib){
-		var lineClub = lineLib[index];
+	if(method == 0){
+		for(var index in lineLib){
+			var lineClub = lineLib[index];
+			for(var key in lineClub){ 
+			  point = getLineData(key, lineClub, pointClub);
+			  //覆盖物点坐标
+				var polyline = new BMap.Polyline([
+					point[0],
+					point[1]
+				], {strokeColor:color[index], strokeWeight:3, strokeOpacity:1}); 
+				map.addOverlay(polyline); 
+			}
+		}
+	}else if (method == 1){
+		var lineClub = data[2][0];
 		for(var key in lineClub){ 
 		  point = getLineData(key, lineClub, pointClub);
 		  //覆盖物点坐标
 			var polyline = new BMap.Polyline([
 				point[0],
 				point[1]
-			], {strokeColor:color[index], strokeWeight:3, strokeOpacity:1}); 
+			], {strokeColor:'#000000', strokeWeight:3, strokeOpacity:1,strokeStyle:'dashed'}); 
 			map.addOverlay(polyline); 
+		}
+	}else if(method == 2){
+		for(var index in lineLib){
+			var lineClub = lineLib[index];
+			for(var key in lineClub){ 
+			  point = getLineData(key, lineClub, pointClub);
+			  //覆盖物点坐标
+				var polyline = new BMap.Polyline([
+					point[0],
+					point[1]
+				], {strokeColor:'#555', strokeWeight:3, strokeOpacity:1}); 
+				map.addOverlay(polyline); 
+			}
+		}
+		var lineClub = data[2][0];
+		for(var key in lineClub){ 
+		  point = getLineData(key, lineClub, pointClub);
+		  //覆盖物点坐标
+			var polyline = new BMap.Polyline([
+				point[0],
+				point[1]
+			], {strokeColor:'#555', strokeWeight:3, strokeOpacity:1,strokeStyle:'dashed'}); 
+			map.addOverlay(polyline); 
+		}
+	}else{
+		var lineLib = data[5];
+		for(var index in lineLib){
+			var lineClub = lineLib[index];
+			for(var key in lineClub){
+			if(lineClub[key][1]>0){
+			  point = getLineData(key, lineClub, pointClub);
+			  //覆盖物点坐标
+				var polyline = new BMap.Polyline([
+					point[0],
+					point[1]
+				], {strokeColor:color[index], strokeWeight:4, strokeOpacity:1}); 
+				map.addOverlay(polyline); 
+			}
+			}
 		}
 	}
 
@@ -102,7 +195,6 @@ $(function(){
 	point2.lat=pointClub[keygen2][13];
 	return [point1,point2];
  }
-
 
 function getBoundary(province, color){         
     var bdary = new BMap.Boundary();  
@@ -130,8 +222,8 @@ function drawBoundary(){
 }
 
  function refreshSwatch(data){
-	var hour = data[3][0][0];
-	var min = data[3][0][1];
+	var hour = data[4][0][0];
+	var min = data[4][0][1];
     $( "#swatch" ).html(hour+':'+min);
   }  
   

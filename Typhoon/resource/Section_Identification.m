@@ -1,20 +1,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%% Section Identification %%%%%%%%%%%%%%%%%%%%%%%%
-function N_cate = Section_Identification()
-tic;                            %开始计时
-
+function N_cate = Section_Identification(time)
 %% ============== Initial Partition ==============
 % ---------------- 输电系统参数计算 ----------------
-TS_n=xlsread('Typhoon.xls','节点');
-TS_l=xlsread('Typhoon.xls','线路');
-[n,nn]=size(TS_n);                                %故障后节点数
-[l,ll]=size(TS_l);                                %故障后线路数
- 
+TS_n=xlsread('广东中调原数据_20170909.xls','节点');
+TS_l=xlsread('广东中调原数据_20170909.xls','线路');
+FS=xlsread('时序线路故障集.xls');
+[n,nn]=size(TS_n);                             %故障前节点数
+[l,ll]=size(TS_l);                             %故障前线路数
+
+% -------------- 修正输电线路节点和线路 --------------
+t=time(1);
+t_m=time(2);
+fs=[];
+for i=1:2:2*(t*4+t_m/15)+1
+    fs=[fs,FS(i:i+1,2+find(FS(i,3:end)~=0))];    %时序故障集
+end
+
+YU=[];
+for i=1:l
+    YG(i)=sum(fs(2,find(fs(1,:)==i)));
+    if YG(i)>=TS_l(i,9)
+        YU=[YU,i];                               %记录被切除线路
+    else
+        TS_l(i,9)=TS_l(i,9)-YG(i);
+    end
+end
+find(YG~=0);
+TS_l(YU,:)=[];                                   %修正线路
+l=size(TS_l,1);                                  %修正线路数
+
+% ---------------- 计算输电网络参数 ----------------
 R=TS_l(:,6).*TS_l(:,10)./TS_l(:,9);            %线路电阻
 X=TS_l(:,7).*TS_l(:,10)./TS_l(:,9);            %线路电感
 C=TS_l(:,8)./TS_l(:,10).*TS_l(:,9);            %线路对地电容
 Yb=1./(R+1j*X);                                %支路导纳
 for i=1:n
     for j=1:l
+        A(i,j)=0;
         if TS_l(j,2)==i                        
             A(i,j)=1;                          %生成关联矩阵
         end
@@ -24,7 +46,7 @@ for i=1:n
     end
 end
 cut_n=find(sum(abs(A),2)==0);
-A(cut_n)=[];                                   %切除孤立节点
+A(cut_n,:)=[];                                 %切除孤立节点
 TS_n(cut_n,:)=[];                  
 n=size(TS_n,1);                                %修正节点数
 Yn=A*diag(Yb)*A';                              %计算节点导纳矩阵
@@ -32,7 +54,7 @@ Yn=Yn-diag(1j*abs(A)*C);                       %加入对地导纳
 Zn=inv(Yn);                                    %加入节点阻抗矩阵
 
 % -------------- matpower数据表case_GD生成并计算潮流--------------
-mpc.baseMVA=1000;                               %system MVA base
+mpc.baseMVA=1000;                              %system MVA base
 mpc.bus=[[1:n]',TS_n(:,15),TS_n(:,7:8),TS_n(:,11:12),ones(n,1)*[1,1,0,525,1,1.05,0.95]]; %bus data
 N_G=find(TS_n(:,15)~=1);
 n_G=size(N_G,1);
@@ -67,12 +89,12 @@ for i=1:n
     end
 end
 F=(abs(GD.branch(:,14))+abs(GD.branch(:,16)))/2;            %线路潮流
-Index_2=1000./abs(beta'*diag(F)*beta);              
-Index_2=Index_2-diag(diag(Index_2));
+Index_2=1000./abs(beta'*beta);              
+Index_2=(Index_2-diag(diag(Index_2)))/1000;
 
 % ---------------- 输电系统节点聚类 --------------
 Index=20*Index_1+5*Index_2;
-K=0.55;
+K=0.28;
 Aa=DP_Cluster( Index,K );                                   %通过自定义DP_Cluster子函数聚类          
 
 % ---------------- 输电系统参数分区 --------------
@@ -106,41 +128,40 @@ for i=1:N_cate
 end 
 TL=TS_l;
 TL(LL,:)=[];                                               %各区域联络线
-
-% -------------- 绘制输电系统分区结果 -------------- 
-%figure 
-fnshp_P='china_basic_map\bou2_4p.shp';%ShapeType: 'Polygon'   
-infoP = shapeinfo(fnshp_P);    
-readP=shaperead(fnshp_P);
-mapshow(fnshp_P);
-hold on
-axis([109 119 18 27])
-for i=1:size(TL,1)
-    st=find(TS_n(:,1)==TL(i,2));
-    en=find(TS_n(:,1)==TL(i,4));
-    %plot([TS_n(st,13);TS_n(en,13)],[TS_n(st,14);TS_n(en,14)],'r:','linewidth',4);
-end
-color={'r','b','g','m','c','k','w','y'};
-for i=1:N_cate
-    for j=1:l_c(i)
-        st=find(EZ_n(:,1,i)==EZ_l(j,2,i));
-        en=find(EZ_n(:,1,i)==EZ_l(j,4,i));
-        %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],color{i},'linewidth',2);
-    end
-    for j=1:n_c(i)
-        %plot(EZ_n(j,13,i),EZ_n(j,14,i),'ko','MarkerFaceColor',color{i},'MarkerSize',8);
-    end
-end
+csvwrite('./resource/connect.csv',TL);
+% % -------------- 绘制输电系统分区结果 -------------- 
+% figure 
+% fnshp_P='china_basic_map\bou2_4p.shp';                     %ShapeType: 'Polygon'   
+% infoP = shapeinfo(fnshp_P);    
+% readP=shaperead(fnshp_P);
+% mapshow(fnshp_P);
+% hold on
+% axis([109 119 18 27])
+% for i=1:size(TL,1)
+%     st=find(TS_n(:,1)==TL(i,2));
+%     en=find(TS_n(:,1)==TL(i,4));
+%     plot([TS_n(st,13);TS_n(en,13)],[TS_n(st,14);TS_n(en,14)],'r:','linewidth',4);
+% end
+% color={'r','b','g','m','c','k','w','y','r','b','g','m','c','k','w','y'};
+% for i=1:N_cate
+%     for j=1:l_c(i)
+%         st=find(EZ_n(:,1,i)==EZ_l(j,2,i));
+%         en=find(EZ_n(:,1,i)==EZ_l(j,4,i));
+%         plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],color{i},'linewidth',2);
+%     end
+%     for j=1:n_c(i)
+%         plot(EZ_n(j,13,i),EZ_n(j,14,i),'ko','MarkerFaceColor',color{i},'MarkerSize',8);
+%     end
+% end
 
 % -------------- 分区结果输出 -------------- 
  for i=1:N_cate
-     % xlswrite('./resource/Section',EZ_n(1:n_c(i),:,i),['节点_',num2str(i)])
-     % xlswrite('./resource/Section',EZ_l(1:l_c(i),:,i),['线路_',num2str(i)])
      point = ['./resource/sectionPoint',num2str(i),'.csv'];
      line = ['./resource/sectionLine',num2str(i),'.csv'];
      csvwrite(point,EZ_n(1:n_c(i),:,i));
      csvwrite(line,EZ_l(1:l_c(i),:,i));
  end
+
 
 %% ============== Section Identification ==============
 for i=1:N_cate
@@ -196,38 +217,45 @@ for i=1:N_cate
     
     Id_n(i,1:2)=[length(Cp),length(nod)];
     CP(1:Id_n(i,1),i)=Cp;
-    Ident(1:Id_n(i,2),1:ll,i)=EZl(branch,:);                             %记录各分区输电断面
+    if isempty(EZl)
+        Id_n(i,1)=0;
+        Ident(1:Id_n(i,2),1:ll,i)=zeros(Id_n(i,2),ll);
+    else
+        Ident(1:Id_n(i,2),1:ll,i)=EZl(branch,:);                             %记录各分区输电断面
+    end
 end
-
-% ------------------- 绘制输电断面 ------------------- 
-%figure 
-% fnshp_P='china_basic_map\bou2_4p.shp';%ShapeType: 'Polygon'   
+% -------------- 区内断面输出 -------------- 
+ for i=1:N_cate
+     line = ['./resource/Ident',num2str(i),'.csv'];
+     csvwrite(line,Ident(1:Id_n(i,2),1:ll,i));
+ end
+% % ------------------- 绘制输电断面 ------------------- 
+% figure 
+% fnshp_P='china_basic_map\bou2_4p.shp';                                       %ShapeType: 'Polygon'   
 % infoP = shapeinfo(fnshp_P);    
 % readP=shaperead(fnshp_P);
 % mapshow(fnshp_P);
 % hold on
 % axis([109 119 18 27])
-% color={'r','b','g','m','c','k','w','y'};
+% color={'r','b','g','m','c','k','w','y','r','b','g','m','c','k','w','y'};
 % for i=1:N_cate
 %     for j=1:l_c(i)
 %         st=find(EZ_n(:,1,i)==EZ_l(j,2,i));
 %         en=find(EZ_n(:,1,i)==EZ_l(j,4,i));
-%         %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'k','linewidth',2);
+%         plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'k','linewidth',2);
 %     end
 %     for j=1:Id_n(i,2)
 %         st=find(EZ_n(:,1,i)==Ident(j,2,i));
 %         en=find(EZ_n(:,1,i)==Ident(j,4,i));
-%         %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'y','linewidth',2);
-%         %plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],color{i},'linewidth',4);
+%         plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],'y','linewidth',2);
+%         plot([EZ_n(st,13,i);EZ_n(en,13,i)],[EZ_n(st,14,i);EZ_n(en,14,i)],color{i},'linewidth',4);
 %     end
 %     for j=1:n_c(i)
-%         %plot(EZ_n(j,13,i),EZ_n(j,14,i),'ko','MarkerFaceColor','r','MarkerSize',8);
+%         plot(EZ_n(j,13,i),EZ_n(j,14,i),'ko','MarkerFaceColor','r','MarkerSize',8);
 %     end
 %     for j=1:Id_n(i,1)
-%         %plot(TS_n(CP(j,i),13),TS_n(CP(j,i),14),'kh','MarkerFaceColor','g','MarkerSize',10);
+%         plot(TS_n(CP(j,i),13),TS_n(CP(j,i),14),'kh','MarkerFaceColor','g','MarkerSize',10);
 %     end
 % end
 
-toc; 
-end%停止计时
 

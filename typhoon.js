@@ -30,7 +30,7 @@ $(function(){
 	var params = {hour:time[0],min:time[1],type:'1'};
 	$( "#send" ).button( "disable");
    $.ajax({
-    //url:'http://localhost/SE/typhoon.php',  //真的是翻皮水，神tm有趣。
+    //url:'http://localhost/SE/typhoon.php',  //偶尔需要使用这样的方法来获取
 	url:'./typhoon.php',
     type:'post',
     dataType:'json',
@@ -64,9 +64,9 @@ $(function(){
  
  function drawPoint(data)
  {
-	var myIcon1 = new BMap.Icon("./resouce/1.png", new BMap.Size(15, 15), {});
-	var myIcon2 = new BMap.Icon("./resouce/2.png", new BMap.Size(15, 15), {});
-	var myIcon3= new BMap.Icon("./resouce/3.png", new BMap.Size(15, 15), {});
+	var myIcon1 = new BMap.Icon("./resource/n1.png", new BMap.Size(15, 15), {});
+	var myIcon2 = new BMap.Icon("./resource/n2.png", new BMap.Size(15, 15), {});
+	var myIcon3= new BMap.Icon("./resource/n3.png", new BMap.Size(15, 15), {});
 	var point1=new BMap.Point(113.14,23.08);
 	var pointClub = data[0];
 	for(var key in pointClub){ 	
@@ -125,7 +125,7 @@ function drawCircle(data){
 	var circle2 = new BMap.Circle(point,typhoon[3]*1000, {fillColor:'#921AFF', strokeColor:'#921AFF', fillOpacity:0.5,strokeOpacity:0.5}); 	
 	map.addOverlay(circle2);
 	map.panTo(point); 
-	var myIcon = new BMap.Icon("./resouce/feng.png", new BMap.Size(15, 15), {});
+	var myIcon = new BMap.Icon("./resource/feng.png", new BMap.Size(15, 15), {});
 	var marker = new BMap.Marker(point,{icon: myIcon});
 	map.addOverlay(marker);
 	var opts = {
